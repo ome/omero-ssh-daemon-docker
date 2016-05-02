@@ -1,16 +1,11 @@
 OMERO ssh daemon CentOS 7
 =========================
 
-Getting Started with Docker
-
-    Clone this repository
-    Install Docker
-
-Creating your own Docker image
+### Creating your own Docker image
 
     make
 
-Run:
+### Run:
 
     UNIX:
 
@@ -20,3 +15,7 @@ Run:
 
         make start PORTS="--privileged"
 
+
+### Test:
+
+    ./runtest.sh
