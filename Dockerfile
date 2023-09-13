@@ -1,6 +1,8 @@
 FROM rockylinux:9
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
+RUN dnf install -y sudo
+
 # sshd
 RUN dnf -y install openssh-server openssh-clients; \
     sed -i 's/^\(UsePAM yes\)/# \1/' /etc/ssh/sshd_config; \
@@ -17,6 +19,8 @@ RUN { \
     echo 'exec "$@"'; \
     } > /usr/local/bin/entry_point.sh; \
     chmod +x /usr/local/bin/entry_point.sh;
+
+RUN echo "root ALL= (ALL) ALL" >> /etc/sudoers
 
 RUN useradd omero && \
     echo 'omero:omero' | chpasswd omero &&\
