@@ -14,13 +14,13 @@ RUN dnf -y install openssh-server openssh-clients; \
 RUN { \
     echo '#!/bin/bash -eu'; \
     echo 'echo "root:${ROOT_PASSWORD}" | chpasswd';\
-    echo 'useradd omero';\
-    echo 'echo "omero:omero" | chpasswd omero';\
-    echo 'usermod -aG wheel'; \
     echo 'exec "$@"'; \
     } > /usr/local/bin/entry_point.sh; \
     chmod +x /usr/local/bin/entry_point.sh;
 
+RUN useradd omero && \
+    echo 'omero:omero' | chpasswd omero &&\
+    echo "%omero ALL= (ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 ENV ROOT_PASSWORD root
 
