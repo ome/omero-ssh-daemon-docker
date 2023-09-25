@@ -13,21 +13,12 @@ RUN dnf -y install openssh-server openssh-clients; \
     rm -f /run/nologin; \
     dnf clean all;
 
-RUN { \
-    echo '#!/bin/bash -eu'; \
-    echo 'echo "root:${ROOT_PASSWORD}" | chpasswd';\
-    echo 'exec "$@"'; \
-    } > /usr/local/bin/entry_point.sh; \
-    chmod +x /usr/local/bin/entry_point.sh;
-
 RUN echo "root ALL= (ALL) ALL" >> /etc/sudoers
 
 RUN useradd omero && \
     echo 'omero:omero' | chpasswd omero &&\
     echo "%omero ALL= (ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ENV ROOT_PASSWORD root
 
 EXPOSE 22
-ENTRYPOINT ["entry_point.sh"]
 CMD ["/usr/sbin/sshd", "-eD"]
