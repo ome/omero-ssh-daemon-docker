@@ -21,7 +21,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags')
     runs-on: ubuntu-latest
     env:
-      name: jburel/omero-ssh-daemon-c7-docker
+      name: ome/omero-ssh-daemon-docker
     steps:
       - name: Get prefix
         id: getprefix
