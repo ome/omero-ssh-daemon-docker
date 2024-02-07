@@ -1,8 +1,8 @@
 NS = openmicroscopy
 VERSION ?= local
 
-REPO = omero-ssh-daemon-c7
-NAME = omero-ssh-daemon-c7
+REPO = omero-ssh-daemon
+NAME = omero-ssh-daemon
 
 build:
 	docker build $(BUILDARGS) -t $(NS)/$(REPO):$(VERSION) .
