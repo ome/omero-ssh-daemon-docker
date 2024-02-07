@@ -11,8 +11,41 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Build
         run: make
       - name: Test
         run: ./runtest.sh
+  upload:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    env:
+      name: ome/omero-ssh-daemon-docker
+    steps:
+      - name: Get prefix
+        id: getprefix
+        run: |
+          if [ ! -z ${{ env.name }} ]; then
+            echo "prefix=${{ env.name }}:"  >> $GITHUB_OUTPUT
+          else
+            echo "prefix=${{ github.repository }}:"  >> $GITHUB_OUTPUT
+          fi
+      - name: Get other tags
+        id: gettags
+        uses: jupyterhub/action-major-minor-tag-calculator@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          prefix: "${{ steps.getprefix.outputs.prefix }}"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          tags: ${{ join(fromJson(steps.gettags.outputs.tags)) }}
+          push: true
