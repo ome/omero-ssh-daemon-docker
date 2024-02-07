@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: make
-      #- name: Test
-      #  run: ./runtest.sh
+      - name: Test
+        run: ./runtest.sh
   upload:
     needs: build
     if: startsWith(github.ref, 'refs/tags')
