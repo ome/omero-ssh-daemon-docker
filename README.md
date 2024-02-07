@@ -1,5 +1,5 @@
-OMERO ssh daemon CentOS 7
-=========================
+OMERO ssh daemon RockyLinux 9
+=============================
 
 ### Creating your own Docker image
 
