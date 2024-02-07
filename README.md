@@ -1,5 +1,5 @@
-OMERO ssh daemon RockyLinux 9
-=============================
+OMERO ssh daemon Rocky Linux 9
+==============================
 
 [![Actions Status](https://github.com/ome/omero-ssh-daemon-docker/workflows/Build/badge.svg)](https://github.com/ome/omero-ssh-daemon-docker/actions)
 
