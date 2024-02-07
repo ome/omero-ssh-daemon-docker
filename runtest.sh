@@ -10,7 +10,7 @@ if [[ "darwin" == "${OSTYPE//[0-9.]/}" ]]; then
 fi
 
 make start PORTS=$PRIVILEGED
-docker inspect -f {{.State.Running}} omero-ssh-daemon-c7
+docker inspect -f {{.State.Running}} omero-ssh-daemon
 
 # CLEANUP
 make stop
